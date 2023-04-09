@@ -14,6 +14,7 @@ public class App {
         tree.add(4);
         tree.add(6);
         tree.add(8);
+        tree.add(11);
 
         List<Integer> dfsOrderItems = new ArrayList<>();
         tree.dfs(dfsOrderItems::add);
@@ -44,7 +45,9 @@ public class App {
         // dfs depth-first-search  // поиск в глубину
         // bfs breath-first-search // поиск в ширину
         System.out.println(tree); // []
-
+        System.out.println(tree.findLast());
+        System.out.println(tree.getChildrenCount());
+        System.out.println(tree.isBalanced());
     }
 
 

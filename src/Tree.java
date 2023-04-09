@@ -14,7 +14,8 @@ public class Tree {
         }
     }
 
-    private Node root;
+    public Node root;
+    public int childrenCount = 0;
 
     public void add(int value) {
         root = appendNode(root, value);
@@ -152,5 +153,84 @@ public class Tree {
         bfs(n -> counter[0]++);
         return counter[0];
     }
+
+    /**
+     * Поиск максимального элемента в дереве
+     * @return
+     */
+    public int findLast() {
+        if (root == null) {
+            throw new NoSuchElementException();
+        }
+        return findLast(root).value;
+    }
+
+    private Node findLast(Node current) {
+        if (current.right != null) {
+            return findLast(current.right);
+        }
+        return current;
+    }
+
+    /**
+     * Подсчет количества листьев дерева
+     * @return
+     */
+    public int getChildrenCount(){
+        return getChildrenCount(root);
+    }
+
+    private int getChildrenCount(Node current){
+        if (root == null) {
+            throw new NoSuchElementException();
+        }
+        if (current.left != null) {
+            //System.out.println("now - Node " + current.value + " / left Node " + current.left.value);
+            getChildrenCount(current.left);
+        }
+        else if (current.right == null) {
+            childrenCount ++;
+            //System.out.println(current.value +" - " +childrenCount);
+            }
+        if (current.right != null) {
+            //System.out.println("now - Node " + current.value + " / right Node " + current.right.value);
+            getChildrenCount(current.right);
+        }
+        return childrenCount;
+    }
+    
+    /**
+     * Проверка дерева на сбалансированность
+     * @return
+     */
+    public boolean isBalanced(){
+        if (root == null)
+            throw new NoSuchElementException();
+        return isBalanced(root.left) && isBalanced(root.right) && Math.abs(height(root.left) - height(root.right)) <= 1;
+    }
+
+    private boolean isBalanced(Node current) {
+        if (current == null)
+            throw new NoSuchElementException();
+        return Math.abs(height(root.left) - height(root.right)) <= 1;        
+    }
+
+    private int height(Node current) {
+        if (current == null)
+            throw new NoSuchElementException();
+        int lHeight = 0;
+        int rHeight = 0;
+        if (current.left == null && current.right == null) return 1;
+        if (current.left != null) {
+            lHeight = height(current.left);  
+        } 
+        if (current.right != null) {
+            rHeight = height(current.right); 
+        } 
+        return Math.max(lHeight, rHeight)+1;
+        }
+
+
+
 
 }
